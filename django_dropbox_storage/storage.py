@@ -1,9 +1,9 @@
 # Original authors: Andres Torres and Maximiliano Cecilia
-
+import sys
 import os.path
 import itertools
 try:
-    from StringIO import StringIO
+    from cStringIO import StringIO
 except ImportError:
     from io import StringIO
 from dropbox import Dropbox
@@ -34,7 +34,10 @@ class DropboxStorage(Storage):
         self.base_url = 'https://dl.dropboxusercontent.com/'
 
     def _get_abs_path(self, name):
-        return os.path.realpath(os.path.join(self.location, name))
+        path = os.path.realpath(os.path.join(self.location, name))
+        if sys.platform == 'win32':
+            path = path[2:].replace('\\', '/')
+        return path
 
     def _open(self, name, mode='rb'):
         name = self._get_abs_path(name)
@@ -50,6 +53,9 @@ class DropboxStorage(Storage):
         # if not response['is_dir']:
         #     raise IOError("%s exists and is not a directory." % directory)
         abs_name = os.path.realpath(os.path.join(self.location, name))
+        if sys.platform == 'win32':
+            abs_name = abs_name[2:].replace('\\', '/')
+
         self.client.files_upload(content.read(), abs_name)
         return name
 
@@ -120,6 +126,7 @@ class DropboxStorage(Storage):
         name = self._get_abs_path(name)
         dir_name, file_name = os.path.split(name)
         file_root, file_ext = os.path.splitext(file_name)
+
         # If the filename already exists, add an underscore and a number (before
         # the file extension, if one exists) to the filename until the generated
         # filename doesn't exist.
@@ -137,7 +144,7 @@ class DropboxFile(File):
         self._storage = storage
         self._mode = mode
         self._is_dirty = False
-        self.file = StringIO()
+        self.file = io()
         self.start_range = 0
         self._name = name
 
@@ -154,7 +161,7 @@ class DropboxFile(File):
     def write(self, content):
         if 'w' not in self._mode:
             raise AttributeError("File was opened for read-only access.")
-        self.file = StringIO(content)
+        self.file = io(content)
         self._is_dirty = True
 
     def close(self):
