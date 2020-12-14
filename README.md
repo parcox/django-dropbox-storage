@@ -79,4 +79,4 @@ DROPBOX_ROOT_FOLDER = '/Public'
 
 By default it's set to `'/'` (root folder).
 
-Later an example will be uploaded and linked here.
+For example usage, refer to [zahidtokur/django-dropbox-example](https://github.com/zahidtokur/django-dropbox-example)
