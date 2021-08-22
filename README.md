@@ -4,12 +4,13 @@
 > A Dropbox Storage for your Django apps
 
 ## Disclaimer 
-This is a relatively old project that I edited according to my needs (e.g. File path issue on Windows, see [this issue](https://github.com/zuck/django-dropbox-storage/issues/1) for details). 
+This is a relatively old project that I edited according to my needs (e.g. File path issue on Windows  (see [this issue](https://github.com/zuck/django-dropbox-storage/issues/1) for details) and `itertools` issue ( see [this issue](https://github.com/zuck/django-dropbox-storage/issues/9) for details)). 
 
 This project was previously worked on by:
 
 * **Andres Torres** [django-dropbox](https://github.com/andres-torres-marroquin/django-dropbox)
 * **Emanuele Bertoldi** [django-dropbox-storage](https://github.com/zuck/django-dropbox-storage)
+* **Zahid Tokur** [django-dropbox-storage](https://github.com/zahidtokur/django-dropbox-storage)
 
 
 ## What
@@ -27,7 +28,7 @@ $ activate
 
 Install the package:
 ```
-$ pip install git+https://github.com/zahidtokur/django-dropbox-storage.git
+$ pip install git+https://github.com/parcox/django-dropbox-storage.git
 ```
 
 Then open the `settings.py` of your project and include it to your `INSTALLED_APPS`:
